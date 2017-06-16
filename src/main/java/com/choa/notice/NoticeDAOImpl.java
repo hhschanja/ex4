@@ -11,20 +11,24 @@ import javax.sql.DataSource;
 
 import org.springframework.stereotype.Repository;
 
+import com.choa.board.BoardDAO;
+import com.choa.board.BoardDTO;
 import com.choa.util.DBConnect;
 import com.choa.util.RowMaker;
 
 @Repository //NoticeDAO noticeDAO = new NoticeDAO(); 인거야
-public class NoticeDAO {
+public class NoticeDAOImpl implements BoardDAO{
 	
 	@Inject //바로 주입
 	private DataSource dataSource;
-
-	public List<NoticeDTO> noticeList(RowMaker rowMaker) throws Exception{
+	
+	@Override
+	public List<BoardDTO> list(RowMaker rowMaker) throws Exception {
+		// TODO Auto-generated method stub
 		Connection con = dataSource.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		List<NoticeDTO> ar  = new ArrayList<NoticeDTO>();
+		List<BoardDTO> ar  = new ArrayList<BoardDTO>();
 		
 		String sql = "select * from"
 				+ "(select rownum R, N.* from"
@@ -52,8 +56,54 @@ public class NoticeDAO {
 		
 		return ar;
 	}
-	
-	public NoticeDTO noticeView(int num) throws Exception{
+
+	@Override
+	public int write(BoardDTO boardDTO) throws Exception {
+		// TODO Auto-generated method stub
+		Connection con = dataSource.getConnection();
+		PreparedStatement pst = null;
+		int result = 0;
+		
+		String sql = "insert into notice values (notice_seq.nextval,?,?,?,sysdate,0)";
+		
+		pst = con.prepareStatement(sql);
+		
+		pst.setString(1, boardDTO.getWriter());
+		pst.setString(2, boardDTO.getTitle());
+		pst.setString(3, boardDTO.getContents());
+		
+		result = pst.executeUpdate();
+		
+		DBConnect.disConnect(pst, con);
+		
+		return result;
+	}
+
+	@Override
+	public int update(BoardDTO boardDTO) throws Exception {
+		// TODO Auto-generated method stub
+		Connection con = dataSource.getConnection();
+		PreparedStatement pst = null;
+		int result = 0;
+		
+		String sql = "update notice set title=?, contents=? where num=?";
+		
+		pst = con.prepareStatement(sql);
+		
+		pst.setString(1, boardDTO.getTitle());
+		pst.setString(2, boardDTO.getContents());
+		pst.setInt(3, boardDTO.getNum());
+		
+		result = pst.executeUpdate();
+		
+		DBConnect.disConnect(pst, con);
+		
+		return result;
+	}
+
+	@Override
+	public BoardDTO view(int num) throws Exception {
+		// TODO Auto-generated method stub
 		Connection con = dataSource.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -78,10 +128,11 @@ public class NoticeDAO {
 		DBConnect.disConnect(rs, pst, con);
 		
 		return ndto;
-		
 	}
-	
-	public int noticeDelete(int num) throws Exception{
+
+	@Override
+	public int delete(int num) throws Exception {
+		// TODO Auto-generated method stub
 		Connection con = dataSource.getConnection();
 		PreparedStatement pst = null;
 		int result = 0;
@@ -96,52 +147,11 @@ public class NoticeDAO {
 		DBConnect.disConnect(pst, con);
 		
 		return result;
-		
 	}
-	
-	public int noticeUpdate(NoticeDTO noticeDTO) throws Exception{
-		Connection con = dataSource.getConnection();
-		PreparedStatement pst = null;
-		int result = 0;
-		
-		String sql = "update notice set title=?, contents=? where num=?";
-		
-		pst = con.prepareStatement(sql);
-		
-		pst.setString(1, noticeDTO.getTitle());
-		pst.setString(2, noticeDTO.getContents());
-		pst.setInt(3, noticeDTO.getNum());
-		
-		result = pst.executeUpdate();
-		
-		DBConnect.disConnect(pst, con);
-		
-		return result;
-		
-	}
-	
-	public int noticeWrite(NoticeDTO noticeDTO)throws Exception{
-		Connection con = dataSource.getConnection();
-		PreparedStatement pst = null;
-		int result = 0;
-		
-		String sql = "insert into notice values (notice_seq.nextval,?,?,?,sysdate,0)";
-		
-		pst = con.prepareStatement(sql);
-		
-		pst.setString(1, noticeDTO.getWriter());
-		pst.setString(2, noticeDTO.getTitle());
-		pst.setString(3, noticeDTO.getContents());
-		
-		result = pst.executeUpdate();
-		
-		DBConnect.disConnect(pst, con);
-		
-		return result;
-		
-	}
-	
-	public int noticeCount() throws Exception{
+
+	@Override
+	public int count() throws Exception {
+		// TODO Auto-generated method stub
 		Connection con = dataSource.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -161,9 +171,26 @@ public class NoticeDAO {
 		
 		return result;
 	}
-	
-	
-	
+
+	@Override
+	public int hit(int num) throws Exception {
+		// TODO Auto-generated method stub
+		Connection con = dataSource.getConnection();
+		PreparedStatement ps = null;
+		int result = 0;
+		
+		String sql = "update notice set hit=hit+1 where num = ?";
+		
+		ps = con.prepareStatement(sql);
+		ps.setInt(1, num);
+		
+		result = ps.executeUpdate();
+		
+		DBConnect.disConnect(ps, con);
+		
+		return result;
+	}
+
 	
 	
 }
