@@ -7,3 +7,4 @@
 .settings/org.eclipse.jdt.core.prefs
 target/m2e-wtp/web-resources/.gitignore
 target/.gitignore
+/target/

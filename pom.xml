@@ -3,20 +3,53 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.choa</groupId>
-	<artifactId>ex4</artifactId>
-	<name>spring_ex4</name>
-	<packaging>war</packaging>
+	<artifactId>ex1</artifactId><!-- 식볗자, context이름 -->
+	<name>spring_ex1</name>
+	<packaging>war</packaging><!-- 와르파일로 만들겠다~  -->
 	<version>1.0.0-BUILD-SNAPSHOT</version>
-	<properties>
+	<properties><!-- 변수명 -->
 		<java-version>1.6</java-version>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+		<org.springframework-version>4.3.0.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
-	<dependencies>
+	
+	<!-- Repository --> <!-- 예전처럼 ojdbc가지고와서 받아서 쓰는게 아니야 여기다 써놓으면 얘가 가서 다운받아오는거야 -->
+	<repositories> <!-- 조금 큰회사가면 공유안하고 지들만 쓰는거 있어 그거를 서버에 올려놓고 여기다가 적어놓고 지들만 다운받아 쓰는거지 -->
+		<repository>
+			<id>codelds</id>
+			<url>https://code.lds.org/nexus/content/groups/main-repo</url>
+		</repository>	
+	
+	</repositories>
+
+	<dependencies><!-- 라이브러리 -->
+	
+	<!-- Ojdbc6.jar (JDBC) -->
+	<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3</version>
+	</dependency>
+		
+	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-dbcp2</artifactId>
+	    <version>2.1.1</version>
+	</dependency>
+	
+	<!-- spring과 jdbc를 연결해주는 놈이 있어야해 -->
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc --> 
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-jdbc</artifactId>
+	    <version>${org.springframework-version}</version> <!-- spring Version과 맞춰줘야해 그러니까 변수명으로 쓰자 -->
+	</dependency>
+	
 		<!-- Spring -->
 		<dependency>
-			<groupId>org.springframework</groupId>
+			<groupId>org.springframework</groupId><!-- 변수명 밑에서 그대로 쓴거지 -->
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
 			<exclusions>
