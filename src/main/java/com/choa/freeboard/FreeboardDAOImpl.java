@@ -66,15 +66,14 @@ public class FreeboardDAOImpl implements BoardDAO{
 		Connection con = dataSource.getConnection();
 		PreparedStatement pst = null;
 		int result = 0;
-		FreeboardDTO fdto =  (FreeboardDTO)boardDTO;
 		
-		String sql = "insert into freeboard values (freeboard_seq.nextval,?,?,?,sysdate,0,freeboard.currval,0,0)";
+		String sql = "insert into freeboard values (point_seq.nextval,?,?,?,sysdate,0,point.currval,0,0)";
 		
 		pst = con.prepareStatement(sql);
 		
-		pst.setString(1, fdto.getWriter());
-		pst.setString(2, fdto.getTitle());
-		pst.setString(3, fdto.getContents());
+		pst.setString(1, boardDTO.getWriter());
+		pst.setString(2, boardDTO.getTitle());
+		pst.setString(3, boardDTO.getContents());
 		
 		result = pst.executeUpdate();
 		

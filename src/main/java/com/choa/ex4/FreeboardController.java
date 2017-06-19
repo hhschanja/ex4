@@ -35,7 +35,12 @@ public class FreeboardController {
 	}
 	
 	@RequestMapping(value="freeboardWrite",method=RequestMethod.GET)
-	public void write(Model model){
+	public String write(Model model){
+		
+		model.addAttribute("board", "freeboard");
+		model.addAttribute("path", "Write");
+		
+		return "board/boardWrite";
 		
 	}
 	
