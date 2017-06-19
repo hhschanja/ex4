@@ -13,7 +13,7 @@
 <p>제목: <input type="text" name="title" value="${dto.title}"></p>
 <p>작성자: <input type="text" name="writer" value="${dto.writer}"></p>
 <p>내용: <textarea rows="" cols="" name="contents">${dto.contents}</textarea></p>
-<p><button>작성하기</button></p>
+<p><button>확인</button></p>
 </form>
 </body>
 </html>

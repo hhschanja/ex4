@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.choa.board.BoardDTO;
 import com.choa.freeboard.FreeboardDAOImpl;
@@ -45,28 +46,76 @@ public class FreeboardController {
 	}
 	
 	@RequestMapping(value="freeboardWrite",method=RequestMethod.POST)
-	public void write(Model model, BoardDTO boardDTO) throws Exception{
+	public String write(Model model, BoardDTO boardDTO) throws Exception{
 		
 		int result = freeboardService.write(boardDTO);
+		
+		if(result>0){
+			model.addAttribute("message", "SUCCESS");
+		}else{
+			model.addAttribute("message", "FAIL");
+		}
+		
+		model.addAttribute("path", "freeboardList");
+		
+		
+		return "common/result";
 		
 	}
 	
 	@RequestMapping(value="freeboardUpdate",method=RequestMethod.GET)
-	public void update(Integer num) throws Exception{
+	public String update(Integer num, Model model) throws Exception{
 		BoardDTO boardDTO = freeboardService.view(num);
-
+		model.addAttribute("dto", boardDTO);
+		model.addAttribute("path", "Update");
+		model.addAttribute("board", "notice");
+		
+		return "board/boardWrite";
+		
 	}
 	
 	@RequestMapping(value="freeboardUpdate",method=RequestMethod.POST)
-	public void update(BoardDTO boardDTO) throws Exception{
+	public String update(BoardDTO boardDTO,Model model) throws Exception{
 		int result = freeboardService.update(boardDTO);
+		
+		String message = "FAIL";
+		
+		if(result>0){
+			message = "SUCCESS";
+		}
+		
+		model.addAttribute("path", "freeboardList");
+		model.addAttribute("message", message);
+		
+		return "common/result";
 		
 	}
 	
 	@RequestMapping(value="freeboardDelete")
-	public void delete(Integer num) throws Exception{
+	public String delete(Integer num,Model model) throws Exception{
 		int result = freeboardService.delete(num);
+		
+		String message = "FAIL";
+		
+		if(result>0){
+			message = "SUCCESS";
+		}
+		
+		model.addAttribute("message", message);
+		model.addAttribute("path", "freeboardList");
+		
+		return "common/result";
 	}
 	
+	@RequestMapping(value="freeboardView")
+	public String view(Integer num,Model model) throws Exception{
+		BoardDTO boardDTO = freeboardService.view(num);
+		
+		model.addAttribute("dto", boardDTO);
+		model.addAttribute("board", "freeboard");
+		
+		return "board/boardView";
+		
+	}
 	
 }

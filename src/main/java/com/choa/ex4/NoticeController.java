@@ -36,27 +36,25 @@ public class NoticeController {
 	public String noticeWrite(Model model) throws Exception{
 		
 		model.addAttribute("path", "Write");
-		return "notice/noticeWrite";
+		model.addAttribute("board", "notice");
+		return "board/boardWrite";
 			
 	}
 	
 	@RequestMapping(value="noticeWrite",method=RequestMethod.POST)
-	public String noticeWrite(BoardDTO boardDTO,Model model,RedirectAttributes rd) throws Exception{
+	public String noticeWrite(BoardDTO boardDTO,Model model) throws Exception{
 		int result = noticeService.write(boardDTO);
 		
-		String message = "FAIL";
 		if(result>0){
-			message="SUCCESS";
+			model.addAttribute("message", "SUCCESS");
 		}else{
-
+			model.addAttribute("message", "FAIL");
 		}
 		
-		//SPRING은 리다이렉트에서도 값을 내보낼 수 있어
-		//flash는 주소창에 남지를 않아, 그냥 add는 주소창에 남아
+		model.addAttribute("path", "noticeList");
 		
-		rd.addFlashAttribute("message", message);
 		
-		return "redirect:/notice/noticeList";
+		return "common/result";
 		
 	}
 	
@@ -64,31 +62,31 @@ public class NoticeController {
 	public String noticeUpdate(Model model,int num) throws Exception{
 		BoardDTO boardDTO = noticeService.view(num);
 		model.addAttribute("dto", boardDTO);
-		model.addAttribute("path", "Write");
-		
-		return "notice/noticeWrite";
+		model.addAttribute("path", "Update");
+		model.addAttribute("board", "notice");
+			
+		return "board/boardWrite";
 	}
 	
 	@RequestMapping(value="noticeUpdate",method=RequestMethod.POST)
-	public String noticeUpdate(BoardDTO boardDTO,RedirectAttributes rd) throws Exception{
+	public String noticeUpdate(BoardDTO boardDTO,Model model) throws Exception{
 		
 		int result = noticeService.update(boardDTO);
-		
+
 		String message = "FAIL";
 		
 		if(result>0){
 			message = "SUCCESS";
-		}else{
-			
 		}
 		
-		rd.addFlashAttribute("message",message);
+		model.addAttribute("path", "noticeList");
+		model.addAttribute("message", message);
 		
-		return "redirect:/notice/noticeList"; 
+		return "common/result";
 	}
 	
 	@RequestMapping(value="noticeDelete")
-	public String noticeDelete(Integer num,RedirectAttributes rd) throws Exception{
+	public String noticeDelete(Integer num,Model model) throws Exception{
 		int result = noticeService.delete(num);
 		
 		String message = "FAIL";
@@ -98,9 +96,10 @@ public class NoticeController {
 			
 		}
 		
-		rd.addFlashAttribute("message", message);
+		model.addAttribute("message", message);
+		model.addAttribute("path", "noticeList");
 		
-		return "redirect:./noticeList";
+		return "common/result";
 	}
 	
 	@RequestMapping(value="noticeView")

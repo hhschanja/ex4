@@ -29,7 +29,7 @@
 &emsp;&emsp;
 </c:forEach>
 </c:catch>
-<a href="./noticeView?num=${dto.num}">${dto.title}</a>
+<a href="./${board}View?num=${dto.num}">${dto.title}</a>
 </td>
 <td>${dto.writer}</td>
 <td>${dto.reg_date}</td>

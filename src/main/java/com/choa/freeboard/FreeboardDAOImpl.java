@@ -67,7 +67,7 @@ public class FreeboardDAOImpl implements BoardDAO{
 		PreparedStatement pst = null;
 		int result = 0;
 		
-		String sql = "insert into freeboard values (point_seq.nextval,?,?,?,sysdate,0,point.currval,0,0)";
+		String sql = "insert into freeboard values (freeboard_seq.nextval,?,?,?,sysdate,0,freeboard_seq.currval,0,0)";
 		
 		pst = con.prepareStatement(sql);
 		
