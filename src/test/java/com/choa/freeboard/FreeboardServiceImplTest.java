@@ -15,27 +15,28 @@ public class FreeboardServiceImplTest extends MyAbstractTest{
 
 	@Inject
 	private FreeboardServiceImpl freeboardServiceImpl;
+	private FreeboardDAOImpl freeboardDAOImpl;
 	
-	
-	public void test() throws Exception{
+
+	public void list() throws Exception{
 		
 		List<BoardDTO> ar = freeboardServiceImpl.list(1);
 		
-		assertEquals(0, ar.size());
+		assertNotEquals(0, ar.size());
 		
 	}
 	
-	
-	public void test2() throws Exception{
+
+	public void delete() throws Exception{
 		
-		int result = freeboardServiceImpl.delete(190);
+		int result = freeboardServiceImpl.delete(996);
 		
 		assertEquals(1, result);
 		
 	}
 	
-	@Test
-	public void test3() throws Exception{
+
+	public void write() throws Exception{
 		
 		BoardDTO boardDTO = new BoardDTO();
 		boardDTO.setTitle("title");
@@ -47,5 +48,30 @@ public class FreeboardServiceImplTest extends MyAbstractTest{
 		assertEquals(1, result);
 		
 	}
+	
+
+	public void update() throws Exception{
+		
+		BoardDTO boardDTO = new BoardDTO();
+		boardDTO.setNum(997);
+		boardDTO.setTitle("title");
+		boardDTO.setContents("contents");
+		boardDTO.setWriter("writer");
+		
+		int result = freeboardServiceImpl.update(boardDTO);
+		
+		assertEquals(1, result);
+		
+	}
+	
+	@Test
+	public void count() throws Exception{
+		
+		int result = freeboardDAOImpl.count();
+		
+		assertNotEquals(0, result);
+		
+	}
+	
 	
 }

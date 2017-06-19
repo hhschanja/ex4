@@ -103,10 +103,12 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="noticeView")
-	public void noiceView(Model model, Integer num) throws Exception{
+	public String noiceView(Model model, Integer num) throws Exception{
 		BoardDTO boardDTO = noticeService.view(num);
 		model.addAttribute("dto",boardDTO);
+		model.addAttribute("board","notice");
 		
+		return "board/boardView";
 	}
 	
 }
