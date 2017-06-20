@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!-- 이 xml은 mybatis xml이라는것을 선언해주는 부분이야 -->
+  
+  <mapper namespace="FreeboardMapper">
+  	<select id="list" resultType="com.choa.freeboard.FreeboardDTO" parameterType="com.choa.util.RowMaker">
+  		select * from (select rownum R, N.* from (select * from freeboard order by ref desc, step asc) N) where R between #{startRow} and #{lastRow}
+  	</select>
+	
+	<select id="view" resultType="com.choa.freeboard.FreeboardDTO" parameterType="java.lang.Integer">
+		select * from freeboard where num=?
+	</select> 
+	
+	<update id="update" parameterType="com.choa.freeboard.FreeboardDTO">
+		update freeboard set title=#{title}, contents=#{contents} where num=#{num}
+	</update>
+  
+  	<delete id="delete" parameterType="java.lang.Integer">
+  		delete from freeboard where num=#{num}
+  	</delete>
+  	
+  	<select id="count" resultType="java.lang.Integer">
+  		select nvl(count(num),0) from freeboard
+  	</select>
+  
+	<insert id="write" parameterType="com.choa.freeboard.FreeboardDTO">
+		insert into freeboard values (freeboard_seq.nextval,#{writer},#{title},#{contents},sysdate,0,freeboard_seq.currval,0,0)
+	</insert>
+  
+  	<update id="hit" parameterType="java.lang.Integer">
+  		update freeboard set hit=hit+1 where num = #{num}
+  	</update>
+  
+  	<update id="replyUpdate" parameterType="com.choa.freeboard.FreeboardDTO">
+  		update freeboard set step=step+1 where ref=${ref} and step>${step}
+  	</update>
+  	
+  	<insert id="replyWrite" parameterType="com.choa.freeboard.FreeboardDTO">
+  		insert into freeboard values()
+  	</insert>
+ 
+  
+  </mapper>

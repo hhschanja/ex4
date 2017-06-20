@@ -2,12 +2,13 @@ package com.choa.board;
 
 import java.util.List;
 
+import com.choa.util.ListInfo;
 import com.choa.util.RowMaker;
 
 public interface BoardDAO {
 	
 	//list
-	public List<BoardDTO> list(RowMaker rowMaker) throws Exception;
+	public List<BoardDTO> list(ListInfo listInfo) throws Exception;
 	
 	//write
 	public int write(BoardDTO boardDTO) throws Exception;
@@ -22,7 +23,7 @@ public interface BoardDAO {
 	public int delete(int num) throws Exception;
 	
 	//count
-	public int count() throws Exception;
+	public int count(ListInfo listInfo) throws Exception;
 	
 	//hit
 	public int hit(int num) throws Exception;

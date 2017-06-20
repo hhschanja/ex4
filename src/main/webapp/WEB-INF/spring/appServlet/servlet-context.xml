@@ -21,8 +21,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.choa.ex4" />
-	<context:component-scan base-package="com.choa.notice" />
+	<context:component-scan base-package="com.choa.ex4" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/><!-- 컨트롤러만 스캔 -->
+	</context:component-scan>
+	
+	<context:component-scan base-package="com.choa.notice" use-default-filters="true">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> <!-- 컨트롤러만 빼고 스캔 -->
+	</context:component-scan>
+	
 	<context:component-scan base-package="com.choa.freeboard" />
 	
 </beans:beans>

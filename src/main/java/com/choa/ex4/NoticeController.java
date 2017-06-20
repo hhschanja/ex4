@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.choa.board.BoardDTO;
 import com.choa.notice.NoticeDTO;
 import com.choa.notice.NoticeServiceImpl;
+import com.choa.util.ListInfo;
 
 
 @Controller
@@ -21,14 +22,13 @@ import com.choa.notice.NoticeServiceImpl;
 public class NoticeController {
 
 	@Inject
-	private NoticeServiceImpl noticeService;	
+	private NoticeServiceImpl noticeService;
 	
 	@RequestMapping(value="noticeList")
-	public String noticeList(Model model,@RequestParam(defaultValue="1")Integer curPage) throws Exception{
-		List<BoardDTO> ar = noticeService.list(curPage);
-		model.addAttribute("list", ar);
-		model.addAttribute("board","notice");
-		//경로도 바꿔줘야지 board로 
+	public String noticeList(Model model,ListInfo listInfo) throws Exception{ // 파라미터로 넘어오는 값을 listInfo가 가지고 있으면 알아서 들어가 null값이어도 spring이 알아서 걸러서 jsp에 null이라고 안나와
+		
+		List<BoardDTO> ar = noticeService.list(listInfo);
+		model.addAttribute("list", ar).addAttribute("board","notice").addAttribute("listInfo", listInfo); //컨트롤러의 listInfo랑 서비스의 listInfo랑 주소값이 같은 객체이니까 요거 하나 날리면되지
 		return "board/boardList";
 	}
 	
@@ -103,10 +103,12 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="noticeView")
-	public void noiceView(Model model, Integer num) throws Exception{
+	public String noiceView(Model model, Integer num) throws Exception{
 		BoardDTO boardDTO = noticeService.view(num);
 		model.addAttribute("dto",boardDTO);
+		model.addAttribute("board","notice");
 		
+		return "board/boardView";
 	}
 	
 }

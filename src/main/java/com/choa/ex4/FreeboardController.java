@@ -1,7 +1,5 @@
 package com.choa.ex4;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -9,14 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.choa.board.BoardDTO;
-import com.choa.freeboard.FreeboardDAOImpl;
-import com.choa.freeboard.FreeboardDTO;
 import com.choa.freeboard.FreeboardServiceImpl;
-import com.choa.util.PageMaker;
-import com.choa.util.RowMaker;
+
 
 @Controller
 @RequestMapping(value="/freeboard/**")
@@ -26,9 +20,9 @@ public class FreeboardController {
 	private FreeboardServiceImpl freeboardService;
 	
 	@RequestMapping(value="freeboardList")
-	public String list(Model model, @RequestParam(defaultValue="1")Integer curPage) throws Exception{
+	public String list(Model model, @RequestParam(defaultValue="1")Integer curPage,String search, String kind) throws Exception{
 		
-		model.addAttribute("list", freeboardService.list(curPage)); //이렇게 바로 쓸 수 있음
+		model.addAttribute("list", freeboardService.list(curPage,search,kind)); //이렇게 바로 쓸 수 있음
 		model.addAttribute("board","freeboard");
 		//경로도 바꿔줘야지 board로 
 		return "board/boardList";

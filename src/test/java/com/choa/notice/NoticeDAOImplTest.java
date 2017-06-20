@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.choa.board.BoardDTO;
 import com.choa.ex4.MyAbstractTest;
+import com.choa.util.ListInfo;
 import com.choa.util.PageMaker;
 import com.choa.util.RowMaker;
 
@@ -18,7 +19,7 @@ public class NoticeDAOImplTest extends MyAbstractTest{
 	@Inject
 	private NoticeDAOImpl noticeDAO;
 	
-	@Test
+	
 	public void test() throws Exception{
 		// view메소드를 테스트 하려면 NoticeDAO가 있어야지 근데 내가 여기서 만들 수 없어
 		// 만들어봤자 datasource가 없잖아 그러니 DAO메소드 실행이 안돼지
@@ -32,22 +33,60 @@ public class NoticeDAOImplTest extends MyAbstractTest{
 		assertNotNull(boardDTO); //junit 메소드 중에 null인지 아닌지
 	}
 	
-	@Test //반드시 test에는 줘야함, test가 적힌 애들은 다하는거야 그때그때 지우고 해주면돼
+	 //반드시 test에는 줘야함, test가 적힌 애들은 다하는거야 그때그때 지우고 해주면돼
 	public void test2()throws Exception{
 		
 		int result = noticeDAO.delete(173);
 		assertEquals(1, result); //result가 1인지 확인해라~
 	}
 	
+	
 	@Test
 	public void test3()throws Exception{
 		
-		PageMaker pm = new PageMaker(1);
-		RowMaker rm = pm.getRowMaker("", "");
-		List<BoardDTO> ar = noticeDAO.list(rm);
+		ListInfo listInfo = new ListInfo();
+		listInfo.setKind("writer");
+		listInfo.setSearch("choa");
 		
-		assertEquals(0, ar.size()); //성공했다면 아무것도 안가지고 온거지
+		int result = noticeDAO.count(listInfo);
+		
+		System.out.println(result);
+	}
+	
+
+	public void connection() throws Exception{
+		NoticeDTO noticeDTO = new NoticeDTO();
+		 noticeDTO.setWriter("choa");
+		 noticeDTO.setTitle("hi");
+		 noticeDTO.setContents("hi");
+		int result = noticeDAO.write(noticeDTO);
+		
+		assertEquals(1, result);
 		
 	}
+	
+	
+	public void connection1() throws Exception{
+		
+		int result = noticeDAO.delete(28);
+		
+		assertEquals(1, result);
+		
+	}
+	
+	
+	public void connection2() throws Exception{
+		NoticeDTO noticeDTO = new NoticeDTO();
+		 noticeDTO.setNum(210);
+		 noticeDTO.setTitle("hi");
+		 noticeDTO.setContents("hi");
+		int result = noticeDAO.update(noticeDTO);
+		
+		assertEquals(1, result);
+		
+	}
+	
+	
+	
 
 }

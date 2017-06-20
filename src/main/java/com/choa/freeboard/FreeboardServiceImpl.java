@@ -20,13 +20,13 @@ public class FreeboardServiceImpl implements BoardService{
 	
 	
 	@Override
-	public List<BoardDTO> list(int curPage) throws Exception {
+	public List<BoardDTO> list(int curPage,String search,String kind) throws Exception {
 		// TODO Auto-generated method stub
 		int totalCount = freeboardDAO.count();
 		PageMaker pm = new PageMaker(curPage);
-		RowMaker rowMaker = pm.getRowMaker("", "");
+		RowMaker rowMaker = pm.getRowMaker();
 		PageResult pr = pm.getMakePage(totalCount);
-		return freeboardDAO.list(rowMaker);
+		return freeboardDAO.list(rowMaker,search,kind);
 	}
 
 	@Override
