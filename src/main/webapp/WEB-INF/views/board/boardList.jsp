@@ -11,6 +11,21 @@
 
 <h1>${board}</h1>
 
+<div>
+<form action="${board}List">
+<select>
+<option value="title">title</option>
+<option value="writer">writer</option>
+<option value="contents">contents</option>
+</select>
+<input type="text" name="find">
+<input type="submit" value="SEARCH">
+</form>
+
+</div>
+
+
+
 <table>
 <tr>
 <td>NUM</td>

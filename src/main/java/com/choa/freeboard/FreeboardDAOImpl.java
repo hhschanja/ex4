@@ -62,14 +62,16 @@ public class FreeboardDAOImpl implements BoardDAO{
 				
 	}
 	
-	private int reply(BoardDTO boardDTO) throws Exception{
+	private int replyWrite(BoardDTO boardDTO) throws Exception{
 		
-		int result = sqlSession.update(NAMESPACE+"reply", boardDTO);
+		int result = sqlSession.update(NAMESPACE+"replyUpdate", boardDTO);
 		
 		if(result>0){
-			return sqlSession.update(NAMESPACE+"reply", boardDTO);
+			result = sqlSession.update(NAMESPACE+"replyWrite", boardDTO);
 		}
 		
+		return result;
 	}
+
 
 }
