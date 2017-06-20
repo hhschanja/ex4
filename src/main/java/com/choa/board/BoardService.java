@@ -3,11 +3,12 @@ package com.choa.board;
 import java.util.List;
 
 import com.choa.freeboard.FreeboardDTO;
+import com.choa.util.ListInfo;
 
 public interface BoardService {
 
 	//list
-	public List<BoardDTO> list(int curPage) throws Exception;
+	public List<BoardDTO> list(ListInfo listInfo) throws Exception;
 	
 	//write
 	public int write(BoardDTO boardDTO) throws Exception;

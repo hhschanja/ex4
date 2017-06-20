@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.choa.board.BoardDTO;
 import com.choa.ex4.MyAbstractTest;
+import com.choa.util.ListInfo;
 import com.choa.util.PageMaker;
 import com.choa.util.RowMaker;
 
@@ -40,14 +41,16 @@ public class NoticeDAOImplTest extends MyAbstractTest{
 	}
 	
 	
+	@Test
 	public void test3()throws Exception{
 		
-		PageMaker pm = new PageMaker(1);
-		RowMaker rm = pm.getRowMaker("", "");
-		List<BoardDTO> ar = noticeDAO.list(rm);
+		ListInfo listInfo = new ListInfo();
+		listInfo.setKind("writer");
+		listInfo.setSearch("choa");
 		
-		assertEquals(0, ar.size()); //성공했다면 아무것도 안가지고 온거지
+		int result = noticeDAO.count(listInfo);
 		
+		System.out.println(result);
 	}
 	
 
@@ -62,20 +65,19 @@ public class NoticeDAOImplTest extends MyAbstractTest{
 		
 	}
 	
-
+	
 	public void connection1() throws Exception{
 		
-		int result = noticeDAO.delete(211);
+		int result = noticeDAO.delete(28);
 		
 		assertEquals(1, result);
 		
 	}
 	
-	@Test
+	
 	public void connection2() throws Exception{
 		NoticeDTO noticeDTO = new NoticeDTO();
 		 noticeDTO.setNum(210);
-		 noticeDTO.setWriter("gaga");
 		 noticeDTO.setTitle("hi");
 		 noticeDTO.setContents("hi");
 		int result = noticeDAO.update(noticeDTO);

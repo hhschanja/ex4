@@ -20,7 +20,7 @@ public class FreeboardServiceImplTest extends MyAbstractTest{
 
 	public void list() throws Exception{
 		
-		List<BoardDTO> ar = freeboardServiceImpl.list(1);
+		List<BoardDTO> ar = freeboardServiceImpl.list(1,"writer","t");
 		
 		assertNotEquals(0, ar.size());
 		

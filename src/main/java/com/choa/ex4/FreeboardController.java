@@ -20,9 +20,9 @@ public class FreeboardController {
 	private FreeboardServiceImpl freeboardService;
 	
 	@RequestMapping(value="freeboardList")
-	public String list(Model model, @RequestParam(defaultValue="1")Integer curPage) throws Exception{
+	public String list(Model model, @RequestParam(defaultValue="1")Integer curPage,String search, String kind) throws Exception{
 		
-		model.addAttribute("list", freeboardService.list(curPage)); //이렇게 바로 쓸 수 있음
+		model.addAttribute("list", freeboardService.list(curPage,search,kind)); //이렇게 바로 쓸 수 있음
 		model.addAttribute("board","freeboard");
 		//경로도 바꿔줘야지 board로 
 		return "board/boardList";

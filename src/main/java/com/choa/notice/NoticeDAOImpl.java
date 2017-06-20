@@ -1,9 +1,6 @@
 package com.choa.notice;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.choa.board.BoardDAO;
 import com.choa.board.BoardDTO;
-import com.choa.util.DBConnect;
-import com.choa.util.RowMaker;
+import com.choa.util.ListInfo;
+
 
 @Repository //NoticeDAO noticeDAO = new NoticeDAO(); 인거야
 public class NoticeDAOImpl implements BoardDAO{
@@ -24,9 +21,9 @@ public class NoticeDAOImpl implements BoardDAO{
 	private static final String NAMESPACE = "NoticeMapper."; //final 바뀌지마라~ final은 상수로 쓰라는건데 상수는 전부 대문자~
 	
 	@Override
-	public List<BoardDTO> list(RowMaker rowMaker) throws Exception {
-			
-		return sqlSession.selectList(NAMESPACE+"list", rowMaker);
+	public List<BoardDTO> list(ListInfo listInfo) throws Exception {
+
+		return sqlSession.selectList(NAMESPACE+"list", listInfo);
 	}
 
 	@Override
@@ -57,9 +54,9 @@ public class NoticeDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public int count() throws Exception {
+	public int count(ListInfo listInfo) throws Exception {
 	
-		return sqlSession.selectOne(NAMESPACE+"count");
+		return sqlSession.selectOne(NAMESPACE+"count",listInfo);
 	}
 
 	@Override
