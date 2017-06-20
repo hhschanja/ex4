@@ -35,6 +35,10 @@
   	<update id="reply" parameterType="com.choa.freeboard.FreeboardDTO">
   		update freeboard set step=step+1 where ref=${ref} and step>${step}
   	</update>
+  	
+  	<insert id="">
+  		insert into freeboard values()
+  	</insert>
  
   
   </mapper>
