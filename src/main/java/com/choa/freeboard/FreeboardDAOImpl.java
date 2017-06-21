@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import com.choa.board.BoardDAO;
 import com.choa.board.BoardDTO;
+import com.choa.util.ListInfo;
 import com.choa.util.RowMaker;
 
 @Repository
@@ -19,9 +20,9 @@ public class FreeboardDAOImpl implements BoardDAO{
 	private static final String NAMESPACE = "FreeboardMapper.";
 	
 	@Override
-	public List<BoardDTO> list(RowMaker rowMaker,String search, String kind) throws Exception {
+	public List<BoardDTO> list(ListInfo listInfo) throws Exception {
 		
-		return sqlSession.selectList(NAMESPACE+"list", rowMaker);
+		return sqlSession.selectList(NAMESPACE+"list", listInfo);
 	}
 
 	@Override
@@ -50,9 +51,9 @@ public class FreeboardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public int count() throws Exception {
+	public int count(ListInfo listInfo) throws Exception {
 		
-		return sqlSession.selectOne(NAMESPACE+"count");
+		return sqlSession.selectOne(NAMESPACE+"count",listInfo);
 	}
 
 	@Override
@@ -61,17 +62,7 @@ public class FreeboardDAOImpl implements BoardDAO{
 		return sqlSession.update(NAMESPACE+"hit",num);
 				
 	}
-	
-	private int replyWrite(BoardDTO boardDTO) throws Exception{
-		
-		int result = sqlSession.update(NAMESPACE+"replyUpdate", boardDTO);
-		
-		if(result>0){
-			result = sqlSession.update(NAMESPACE+"replyWrite", boardDTO);
-		}
-		
-		return result;
-	}
+
 
 
 }

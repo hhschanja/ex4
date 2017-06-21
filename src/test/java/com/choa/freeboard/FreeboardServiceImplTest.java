@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.choa.board.BoardDTO;
 import com.choa.ex4.MyAbstractTest;
+import com.choa.util.ListInfo;
 
 public class FreeboardServiceImplTest extends MyAbstractTest{
 
@@ -19,8 +20,8 @@ public class FreeboardServiceImplTest extends MyAbstractTest{
 	
 
 	public void list() throws Exception{
-		
-		List<BoardDTO> ar = freeboardServiceImpl.list(1,"writer","t");
+		ListInfo listInfo = new ListInfo();
+		List<BoardDTO> ar = freeboardServiceImpl.list(listInfo);
 		
 		assertNotEquals(0, ar.size());
 		
@@ -66,8 +67,8 @@ public class FreeboardServiceImplTest extends MyAbstractTest{
 	
 	@Test
 	public void count() throws Exception{
-		
-		int result = freeboardDAOImpl.count();
+		ListInfo listInfo = new ListInfo();
+		int result = freeboardDAOImpl.count(listInfo);
 		
 		assertNotEquals(0, result);
 		

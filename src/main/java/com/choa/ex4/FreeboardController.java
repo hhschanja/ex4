@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.choa.board.BoardDTO;
 import com.choa.freeboard.FreeboardServiceImpl;
+import com.choa.util.ListInfo;
 
 
 @Controller
@@ -20,10 +21,10 @@ public class FreeboardController {
 	private FreeboardServiceImpl freeboardService;
 	
 	@RequestMapping(value="freeboardList")
-	public String list(Model model, @RequestParam(defaultValue="1")Integer curPage,String search, String kind) throws Exception{
+	public String list(Model model, ListInfo listInfo) throws Exception{
 		
-		model.addAttribute("list", freeboardService.list(curPage,search,kind)); //이렇게 바로 쓸 수 있음
-		model.addAttribute("board","freeboard");
+		model.addAttribute("list", freeboardService.list(listInfo)); //이렇게 바로 쓸 수 있음
+		model.addAttribute("board","freeboard").addAttribute("listInfo", listInfo);
 		//경로도 바꿔줘야지 board로 
 		return "board/boardList";
 		
