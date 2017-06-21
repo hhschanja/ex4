@@ -8,13 +8,13 @@
 	<sql id="search"><!-- 미리 만들어 놓고 임포트 형식으로 여러번 넣어서 쓸 수 있음 -->
 	<trim prefix="where" prefixOverrides="and || or">
 		<if test="kind=='title'">
-		title like #{search}
+		title like '%' || #{search} || '%'
 		</if>
 		<if test="kind=='writer'">
-		writer like #{search}
+		writer like '%' || #{search} || '%'
 		</if>
 		<if test="kind=='contents'">
-		contents like #{search}
+		contents like '%' || #{search} || '%'
 		</if>
 		</trim>
 	</sql>

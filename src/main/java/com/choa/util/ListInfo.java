@@ -50,7 +50,7 @@ public class ListInfo {
 		this.curPage = curPage;
 	}
 	public String getSearch() {
-		return "%"+search+"%";
+		return search;
 	}
 	public void setSearch(String search) {
 		this.search = search;
